@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Client</title>
+</head>
+<body>
+    <h1>Socket.IO Client</h1>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        let isFirstBatch = true;
+
+        socket.on('welcome', (user) => {
+            if (isFirstBatch) {
+                console.log(`Hello "${user}"!`);
+            }
+        });
+
+        socket.on('numbers', (numbersArray) => {
+            if (isFirstBatch) {
+                console.log('Ready');
+                console.group('Array(' + numbersArray.length + ')');
+                numbersArray.forEach(() => {
+                    console.log('Object');
+                });
+                console.groupEnd();
+                isFirstBatch = false; 
+            }
+            numbersArray.forEach((obj) => {
+                console.log(`Random number: ${obj['Random number']}`);
+            });
+        });
+    </script>
+</body>
+</html>
